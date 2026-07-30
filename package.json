@@ -21,7 +21,7 @@
     "@fontsource/space-grotesk": "latest",
     "@resvg/resvg-js": "latest",
     "astro": "latest",
-    "better-sqlite3": "latest",
+    "better-sqlite3": "12.10.0",
     "satori": "latest",
     "simple-icons": "latest"
   },
