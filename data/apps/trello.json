@@ -1,0 +1,19 @@
+{
+  "slug": "trello",
+  "name": "Trello",
+  "domain": "trello.com",
+  "category": "Project Management",
+  "priceMonthly": 5,
+  "verdict": "yes",
+  "whatYouLose": [
+    "Power-Ups and integrations built over many years",
+    "Mature mobile apps and offline sync",
+    "Large-team permissions and workspace administration"
+  ],
+  "priorArt": [
+    { "name": "Wekan", "url": "https://github.com/wekan/wekan" },
+    { "name": "Planka", "url": "https://github.com/plankanban/planka" }
+  ],
+  "prompt": "Build a single-team kanban board with boards, columns, cards, labels, due dates, checklists, comments, and assignees. Add accessible drag-and-drop with keyboard alternatives, optimistic movement, server validation, activity history, filters, card search, archive/restore, and JSON export. Store everything in SQLite, protect the workspace with one shared password, render with Astro SSR, and use vanilla JavaScript for interactions. Include migrations, realistic seed data, responsive layouts, and tests for reorder conflicts.",
+  "notes": "An opinionated kanban for a small team is a clean one-prompt target. Keep the scope tighter than Trello's entire ecosystem."
+}

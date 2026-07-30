@@ -1,0 +1,19 @@
+{
+  "slug": "typeform",
+  "name": "Typeform",
+  "domain": "typeform.com",
+  "category": "Forms",
+  "priceMonthly": 29,
+  "verdict": "yes",
+  "whatYouLose": [
+    "Advanced branching logic and a large integration marketplace",
+    "Enterprise compliance, permissions, and response analytics",
+    "Highly polished media-rich form templates"
+  ],
+  "priorArt": [
+    { "name": "Formbricks", "url": "https://github.com/formbricks/formbricks" },
+    { "name": "HeyForm", "url": "https://github.com/heyform/heyform" }
+  ],
+  "prompt": "Build a conversational form builder for one workspace. Admins create forms with short text, long text, email, number, single-choice, multi-choice, rating, and consent questions. Render one question per screen with keyboard-first navigation, progress, conditional jumps, required validation, draft persistence, and an embeddable public form. Store forms and responses in SQLite, provide CSV export and simple completion/drop-off analytics, add a password-protected admin area, and include honeypot plus rate limiting. Use Astro SSR and vanilla JavaScript with no client framework.",
+  "notes": "A focused lead form or research questionnaire is straightforward. The complexity arrives when every team needs its own branching grammar and integrations."
+}

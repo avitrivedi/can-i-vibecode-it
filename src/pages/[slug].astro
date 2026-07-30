@@ -1,0 +1,326 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  appBySlug,
+  relatedApps,
+  verdictCopy
+} from "../lib/apps";
+import { getVoteCount } from "../lib/db";
+import { canonicalFor, money, ORG_ID, SITE_NAME } from "../lib/site";
+
+const slug = Astro.params.slug || "";
+const app = appBySlug.get(slug);
+if (!app) return Astro.redirect("/404");
+
+const verdict = verdictCopy[app.verdict];
+const votes = getVoteCount(app.slug);
+const related = relatedApps(app);
+const canonical = canonicalFor(Astro.url, `/${app.slug}`);
+const title = `Can I replace ${app.name} with one AI coding prompt?`;
+const description = `${verdict.label} See the honest tradeoffs and copy the one-shot prompt for a focused ${app.name} replacement.`;
+const faq = [
+  {
+    question: `Can one prompt really replace ${app.name}?`,
+    answer:
+      app.verdict === "yes"
+        ? `For the core workflow, yes. The prompt below deliberately narrows ${app.name} to the part a small team actually needs.`
+        : app.verdict === "kinda"
+          ? `It can replace a tightly scoped ${app.name} workflow, not the full platform. Keep the data model and user count deliberately small.`
+          : `Not responsibly at full fidelity. Use the prompt as a prototype or low-risk internal tool, not as a claim of production equivalence.`
+  },
+  {
+    question: "Is the generated app production-ready?",
+    answer:
+      "Treat the first result as a strong working baseline. Review authentication, authorization, backups, rate limits, dependency risks, accessibility, and failure recovery before using real customer data."
+  },
+  {
+    question: "Which AI coding agent should I use?",
+    answer:
+      "Claude Code, Codex, and Cursor can all execute this prompt. Use the copy button for your agent; it adds run instructions that encourage a complete implementation, tests, and a final self-review."
+  },
+  {
+    question: `Is it legal to build my own ${app.name} alternative?`,
+    answer:
+      "Rebuilding a workflow with your own code is generally different from copying proprietary code, trademarks, or protected assets. Avoid brand confusion, honor licenses, and get legal advice for regulated or high-risk use."
+  }
+];
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${new URL("/", canonical)}${ORG_ID}`,
+      name: SITE_NAME,
+      url: new URL("/", canonical).toString(),
+      logo: new URL("/favicon.png", canonical).toString()
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "The Death List",
+          item: new URL("/", canonical).toString()
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: app.name,
+          item: canonical
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: faq.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer
+        }
+      }))
+    }
+  ]
+};
+const shareUrl = `https://twitter.com/intent/tweet?${new URLSearchParams({
+  text: `${verdict.short}: ${title} — ${votes.toLocaleString()} builders already replaced it.`,
+  url: canonical
+})}`;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  image={`/og/${app.slug}.png`}
+  canonicalPath={`/${app.slug}`}
+  jsonLd={jsonLd}
+>
+  <section class={`detail-hero verdict-${app.verdict}-page`}>
+    <div class="shell">
+      <nav class="breadcrumbs" aria-label="Breadcrumb">
+        <a href="/">DEATH LIST</a><span>/</span><span>{app.name.toUpperCase()}</span>
+      </nav>
+      <div class="detail-grid">
+        <div>
+          <div class="app-kicker">
+            <img
+              class="app-icon"
+              src={`/favicons/${app.slug}.png`}
+              width="40"
+              height="40"
+              alt=""
+            />
+            <span>{app.domain} · {app.category.toUpperCase()}</span>
+          </div>
+          <h1>CAN I REPLACE<br /><span>{app.name.toUpperCase()}?</span></h1>
+        </div>
+        <aside>
+          <div class="verdict-panel">
+            <span class={`verdict verdict-${app.verdict}`}>
+              <i></i>{verdict.short}
+            </span>
+            <p>{verdict.explanation}</p>
+            <div class="price-readout">
+              <span>RECURRING RENT</span>
+              <strong>{money(app.priceMonthly)}<small>/MO</small></strong>
+            </div>
+          </div>
+          <div class="detail-actions">
+            <button
+              class="vote-button"
+              type="button"
+              data-vote-button
+              data-slug={app.slug}
+            >
+              I REPLACED THIS <b data-page-votes>{votes.toLocaleString()}</b>
+            </button>
+            <a
+              class="button button-quiet"
+              href={shareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              SHARE ON X ↗
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <div class="detail-content">
+    <div class="shell content-grid">
+      <div>
+        <section class="content-block" data-reveal>
+          <div class="block-heading">
+            <div>
+              <p class="eyebrow">THE ONE-SHOT BUILD</p>
+              <h2>Copy. Run. Regret less.</h2>
+            </div>
+            <p>
+              Agent buttons add tool-specific run instructions before the same
+              honest scope.
+            </p>
+          </div>
+          <div class="prompt-terminal">
+            <div class="prompt-toolbar">
+              <div class="terminal-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span>BUILD_{app.slug.toUpperCase()}.PROMPT</span>
+              <div class="agent-buttons" aria-label="Copy prompt for coding agent">
+                <button class="agent-copy" type="button" data-agent="claude">
+                  CLAUDE CODE
+                </button>
+                <button class="agent-copy" type="button" data-agent="codex">
+                  CODEX
+                </button>
+                <button class="agent-copy" type="button" data-agent="cursor">
+                  CURSOR
+                </button>
+              </div>
+            </div>
+            <pre class="prompt-code"><code data-prompt-code>{app.prompt}</code></pre>
+            <textarea class="sr-only" data-raw-prompt>{app.prompt}</textarea>
+          </div>
+        </section>
+
+        <section class="content-block" data-reveal>
+          <div class="block-heading">
+            <div>
+              <p class="eyebrow">DUE DILIGENCE</p>
+              <h2>Four questions before shipping.</h2>
+            </div>
+          </div>
+          <div class="faq-list">
+            {
+              faq.map((item, index) => (
+                <details open={index === 0}>
+                  <summary>{item.question}</summary>
+                  <p>{item.answer}</p>
+                </details>
+              ))
+            }
+          </div>
+        </section>
+
+        <section class="content-block" data-reveal>
+          <div class="block-heading">
+            <div>
+              <p class="eyebrow">NEXT TARGETS</p>
+              <h2>Three adjacent cancellations.</h2>
+            </div>
+          </div>
+          <div class="related-grid">
+            {
+              related.map((item) => (
+                <a class="related-card" href={`/${item.slug}`}>
+                  <img
+                    class="app-icon"
+                    src={`/favicons/${item.slug}.png`}
+                    width="40"
+                    height="40"
+                    alt=""
+                    loading="lazy"
+                  />
+                  <strong>{item.name}</strong>
+                  <span class={`verdict verdict-${item.verdict}`}>
+                    <i></i>{verdictCopy[item.verdict].short}
+                  </span>
+                  <p>{money(item.priceMonthly)}/mo back in your pocket.</p>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+      </div>
+
+      <aside class="side-stack">
+        <section class="side-card" data-reveal>
+          <p class="eyebrow">WHAT YOU LOSE</p>
+          <h2>The honest tradeoffs.</h2>
+          <ul class="loss-list">
+            {app.whatYouLose.map((item) => <li>{item}</li>)}
+          </ul>
+        </section>
+
+        <section class="side-card" data-reveal>
+          <p class="eyebrow">PRIOR ART</p>
+          <h3>People already building in public.</h3>
+          <div class="prior-links">
+            {
+              app.priorArt.map((item) => (
+                <a href={item.url} target="_blank" rel="noopener noreferrer">
+                  <span>{item.name}</span><span>GITHUB ↗</span>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+
+        <blockquote class="editor-note" data-reveal>
+          <strong>EDITOR’S NOTE</strong>
+          {app.notes}
+        </blockquote>
+      </aside>
+    </div>
+  </div>
+
+  <script is:inline>
+    const prefixes = {
+      claude: "You are Claude Code in an empty repository. Plan briefly, then implement the complete app without stopping for confirmation. Use sensible defaults, run the test suite, fix failures, and finish with setup instructions.\n\n",
+      codex: "You are Codex working autonomously in an empty repository. Build the complete app end to end, keep changes scoped, run checks after implementation, repair failures, and report the final files and local start command.\n\n",
+      cursor: "You are Cursor Agent in an empty repository. Create the full project, choose stable dependencies, implement every requested feature, verify the build and tests, then add a concise README. Do not leave placeholder TODOs.\n\n"
+    };
+    const rawPrompt = document.querySelector("[data-raw-prompt]")?.value || "";
+    document.querySelectorAll("[data-agent]").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const agent = button.dataset.agent;
+        const text = `${prefixes[agent]}${rawPrompt}`;
+        try {
+          await navigator.clipboard.writeText(text);
+          document.querySelectorAll("[data-agent]").forEach((item) => {
+            item.classList.remove("is-copied");
+            item.textContent = item.dataset.agent === "claude"
+              ? "CLAUDE CODE"
+              : item.dataset.agent.toUpperCase();
+          });
+          const previous = button.textContent;
+          button.classList.add("is-copied");
+          button.textContent = "COPIED ✓";
+          window.vibeToast?.(`Prompt copied for ${agent === "claude" ? "Claude Code" : agent}`);
+          setTimeout(() => {
+            button.classList.remove("is-copied");
+            button.textContent = previous;
+          }, 1800);
+        } catch {
+          window.vibeToast?.("Clipboard blocked — select the prompt manually.");
+        }
+      });
+    });
+
+    const voteButton = document.querySelector("[data-vote-button]");
+    voteButton?.addEventListener("click", async () => {
+      voteButton.disabled = true;
+      const original = voteButton.firstChild.textContent;
+      voteButton.firstChild.textContent = "RECORDING… ";
+      try {
+        const response = await fetch("/api/vote", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ slug: voteButton.dataset.slug })
+        });
+        const data = await response.json();
+        document.querySelector("[data-page-votes]").textContent =
+          Number(data.total).toLocaleString();
+        if (!response.ok) throw new Error(data.message);
+        voteButton.firstChild.textContent = "REPLACEMENT LOGGED ";
+        window.vibeToast?.("Vote counted. MRR successfully destroyed.");
+      } catch (error) {
+        voteButton.disabled = false;
+        voteButton.firstChild.textContent = original;
+        window.vibeToast?.(error.message || "Could not record vote.");
+      }
+    });
+  </script>
+</BaseLayout>

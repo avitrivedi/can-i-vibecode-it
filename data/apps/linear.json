@@ -1,0 +1,19 @@
+{
+  "slug": "linear",
+  "name": "Linear",
+  "domain": "linear.app",
+  "category": "Project Management",
+  "priceMonthly": 10,
+  "verdict": "kinda",
+  "whatYouLose": [
+    "Exceptionally fast multiplayer sync and offline behavior",
+    "Deep issue workflows, integrations, roadmaps, and triage automation",
+    "Years of interaction and keyboard-shortcut refinement"
+  ],
+  "priorArt": [
+    { "name": "Plane", "url": "https://github.com/makeplane/plane" },
+    { "name": "Huly", "url": "https://github.com/hcengineering/platform" }
+  ],
+  "prompt": "Build a keyboard-first issue tracker for one software team. Support projects, cycles, statuses, priorities, labels, assignees, issue relations, comments, and markdown descriptions. Include a fast command menu, list and board views, filters encoded in the URL, issue templates, activity history, CSV import/export, and a minimal GitHub webhook that links commits to issue keys. Use Astro SSR, SQLite full-text search, and small vanilla JavaScript enhancements. Add migrations, seed data, accessibility checks, and tests.",
+  "notes": "A calm issue tracker for one opinionated workflow is buildable. Linear's speed, sync, and breadth remain the moat."
+}

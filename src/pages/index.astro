@@ -1,0 +1,216 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Ticker from "../components/Ticker.astro";
+import DeathList from "../components/DeathList.astro";
+import { apps, categories, categoryEmoji } from "../lib/apps";
+import { getVoteCounts } from "../lib/db";
+import { canonicalFor, ORG_ID, SITE_DESCRIPTION, SITE_NAME } from "../lib/site";
+
+const voteCounts = getVoteCounts();
+const ranked = apps
+  .map((app) => ({ ...app, votes: voteCounts.get(app.slug) ?? 0 }))
+  .sort((a, b) => b.votes - a.votes);
+const totalMrr = ranked.reduce(
+  (sum, app) => sum + app.priceMonthly * app.votes,
+  0
+);
+const canonical = canonicalFor(Astro.url, "/");
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${canonical}${ORG_ID}`,
+      name: SITE_NAME,
+      url: canonical,
+      logo: new URL("/favicon.png", canonical).toString(),
+      sameAs: ["https://github.com/avitrivedi/can-i-vibecode-it"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${canonical}#website`,
+      name: SITE_NAME,
+      url: canonical,
+      description: SITE_DESCRIPTION,
+      publisher: { "@id": `${canonical}${ORG_ID}` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${canonical}?q={search_term_string}#death-list`
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "ItemList",
+      name: "The Death List",
+      numberOfItems: ranked.length,
+      itemListOrder: "https://schema.org/ItemListOrderDescending",
+      itemListElement: ranked.map((app, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: app.name,
+        url: new URL(`/${app.slug}`, canonical).toString()
+      }))
+    }
+  ]
+};
+---
+
+<BaseLayout
+  title="Can I Vibecode It? Can one AI coding prompt replace your SaaS?"
+  description="The brutally honest directory of paid SaaS apps you can — and cannot — replace with one AI coding prompt."
+  image="/og/home.png"
+  jsonLd={jsonLd}
+>
+  <section class="hero">
+    <div class="shell">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow">THE UN-SUBSCRIPTION DATABASE</p>
+          <h1>
+            CAN I
+            <span class="outline">VIBECODE</span>
+            <span class="accent">IT?</span>
+          </h1>
+        </div>
+        <aside class="hero-aside">
+          <p>
+            Type the SaaS you rent. Get a <strong>yes, kinda, or no</strong> —
+            plus the exact one-shot prompt to try.
+          </p>
+          <span class="terminal-line">NO HYPE. JUST SCOPE.</span>
+        </aside>
+      </div>
+
+      <div class="search-console" data-reveal>
+        <label class="search-box" for="app-search">
+          <span class="search-prompt" aria-hidden="true">&gt;_</span>
+          <input
+            id="app-search"
+            type="search"
+            placeholder="Search Notion, Calendly, Zapier…"
+            autocomplete="off"
+            data-app-search
+          />
+          <span class="key-hint" aria-hidden="true">/</span>
+        </label>
+        <div class="category-chips" aria-label="Filter by category">
+          <button class="chip" type="button" data-category="" aria-pressed="true">
+            <span aria-hidden="true">✦</span> ALL SYSTEMS
+          </button>
+          {
+            categories.map((category) => (
+              <button
+                class="chip"
+                type="button"
+                data-category={category}
+                aria-pressed="false"
+              >
+                <span aria-hidden="true">{categoryEmoji[category] || "•"}</span>
+                {category.toUpperCase()}
+              </button>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Ticker apps={ranked} total={totalMrr} />
+
+  <section class="list-section" id="death-list">
+    <div class="shell">
+      <div class="section-heading" data-reveal>
+        <div>
+          <p class="eyebrow">COMMUNITY CONFIRMED</p>
+          <h2>THE DEATH <span>LIST.</span></h2>
+        </div>
+        <div class="section-meta">
+          <span>SHOWING <b data-visible-count>{ranked.length}</b>/{ranked.length}</span>
+          <span>SORT: <b>REPLACEMENTS ↓</b></span>
+        </div>
+      </div>
+      <DeathList apps={ranked} />
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <div class="shell manifesto-grid" data-reveal>
+      <div>
+        <p class="eyebrow">THE FINE PRINT</p>
+        <h2>A prompt is not a product team.</h2>
+      </div>
+      <div class="manifesto-copy">
+        <article>
+          <strong>01 / REBUILD THE JOB</strong>
+          <p>
+            Your goal is not feature parity. Rebuild the one workflow you
+            actually pay for and delete everything else.
+          </p>
+        </article>
+        <article>
+          <strong>02 / OWN THE CONSEQUENCES</strong>
+          <p>
+            You inherit security, backups, uptime, and maintenance. The prompt
+            starts the work; it does not erase it.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const search = document.querySelector("[data-app-search]");
+    const rows = [...document.querySelectorAll("[data-filter-row]")];
+    const chips = [...document.querySelectorAll("[data-category]")];
+    const count = document.querySelector("[data-visible-count]");
+    const empty = document.querySelector("[data-list-empty]");
+    let activeCategory = "";
+
+    const applyFilters = () => {
+      const query = search.value.trim().toLowerCase();
+      let visible = 0;
+      rows.forEach((row) => {
+        const matchesQuery = !query || row.dataset.name.includes(query);
+        const matchesCategory = !activeCategory || row.dataset.category === activeCategory;
+        const show = matchesQuery && matchesCategory;
+        row.hidden = !show;
+        if (show) visible += 1;
+      });
+      count.textContent = String(visible);
+      empty.hidden = visible !== 0;
+      const url = new URL(location.href);
+      query ? url.searchParams.set("q", query) : url.searchParams.delete("q");
+      history.replaceState({}, "", url);
+    };
+
+    search.addEventListener("input", applyFilters);
+    chips.forEach((chip) => {
+      chip.addEventListener("click", () => {
+        activeCategory = chip.dataset.category || "";
+        chips.forEach((item) => item.setAttribute("aria-pressed", String(item === chip)));
+        applyFilters();
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "/" && document.activeElement !== search) {
+        event.preventDefault();
+        search.focus();
+      }
+      if (event.key === "Escape" && document.activeElement === search) {
+        search.value = "";
+        applyFilters();
+        search.blur();
+      }
+    });
+
+    const initial = new URL(location.href).searchParams.get("q");
+    if (initial) {
+      search.value = initial;
+      applyFilters();
+    }
+  </script>
+</BaseLayout>

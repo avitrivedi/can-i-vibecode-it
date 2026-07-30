@@ -1,0 +1,19 @@
+{
+  "slug": "uptimerobot",
+  "name": "UptimeRobot",
+  "domain": "uptimerobot.com",
+  "category": "Developer Tools",
+  "priceMonthly": 7,
+  "verdict": "yes",
+  "whatYouLose": [
+    "Geographically distributed checks and false-positive suppression",
+    "Managed alert delivery across many channels",
+    "A provider that remains online when your own infrastructure fails"
+  ],
+  "priorArt": [
+    { "name": "Uptime Kuma", "url": "https://github.com/louislam/uptime-kuma" },
+    { "name": "Gatus", "url": "https://github.com/TwiN/gatus" }
+  ],
+  "prompt": "Build a self-hosted uptime monitor for up to 25 HTTP endpoints. Run scheduled checks with timeout, expected status, optional keyword assertion, consecutive-failure thresholds, and response-time recording. Store incidents and check samples in SQLite, show a public status page and 30-day sparklines, and send alerts through one configurable webhook. Include maintenance windows, manual pause, retention cleanup, rate-safe scheduling, an environment-password admin, Docker deployment, and tests using local mock endpoints. Use Astro SSR and vanilla JavaScript.",
+  "notes": "The software is small; the caveat is placement. Host it somewhere independent from the systems it monitors."
+}

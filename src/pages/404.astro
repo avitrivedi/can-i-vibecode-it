@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+Astro.response.status = 404;
+---
+
+<BaseLayout
+  title="Can I find that page? Not really."
+  description="The requested process was not found."
+>
+  <section class="page-hero">
+    <div class="narrow-shell">
+      <p class="eyebrow">ERROR 404 / PROCESS EXITED</p>
+      <h1>Can I find that page? <span style="color:var(--red)">Not really.</span></h1>
+      <p>The route was cancelled before we could cancel its subscription.</p>
+      <p><a class="button button-primary" href="/">RETURN TO DEATH LIST</a></p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,19 @@
+{
+  "slug": "calendly",
+  "name": "Calendly",
+  "domain": "calendly.com",
+  "category": "Scheduling",
+  "priceMonthly": 12,
+  "verdict": "yes",
+  "whatYouLose": [
+    "Deep enterprise calendar administration and round-robin routing",
+    "Native integrations with every CRM and video meeting provider",
+    "Battle-tested timezone and edge-case handling at global scale"
+  ],
+  "priorArt": [
+    { "name": "Cal.com", "url": "https://github.com/calcom/cal.com" },
+    { "name": "Easy!Appointments", "url": "https://github.com/alextselegidis/easyappointments" }
+  ],
+  "prompt": "Build a self-hosted one-person scheduling app. The owner configures weekly availability, meeting lengths, buffers, minimum notice, and blackout dates. Visitors see available slots in their timezone, enter name/email/notes, and receive an .ics invitation. Prevent double booking with SQLite transactions. Include a private admin page protected by an environment password, reschedule and cancel links with signed tokens, accessible date and time pickers, email templates, tests for timezone boundaries, and a deployment README. Use Astro server output and vanilla JavaScript only.",
+  "notes": "For a solo operator with a small menu of meeting types, this is exactly the kind of narrow SaaS replacement that vibecoding handles well."
+}

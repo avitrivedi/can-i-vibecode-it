@@ -1,0 +1,19 @@
+{
+  "slug": "loom",
+  "name": "Loom",
+  "domain": "loom.com",
+  "category": "Video",
+  "priceMonthly": 15,
+  "verdict": "no",
+  "whatYouLose": [
+    "Reliable browser capture across operating systems and hardware",
+    "Video transcoding, adaptive delivery, and global storage infrastructure",
+    "Instant sharing, commenting, transcription, and editing polish"
+  ],
+  "priorArt": [
+    { "name": "Cap", "url": "https://github.com/CapSoftware/Cap" },
+    { "name": "Screenity", "url": "https://github.com/alyssaxuu/screenity" }
+  ],
+  "prompt": "Build a local-first screen recorder prototype for Chromium. Capture a selected screen or tab plus microphone using MediaRecorder, show a recording timer and input levels, allow pause/resume, then provide an in-browser trim preview and WebM download. Add an optional self-hosted upload endpoint with expiring share links, simple comments, and SQLite metadata. Be explicit about browser support, file size limits, and the lack of production-grade transcoding. Use accessible vanilla JavaScript and an Astro server shell.",
+  "notes": "You can prompt your way to a recorder prototype. You cannot prompt away a media pipeline, native capture edge cases, and global video delivery."
+}

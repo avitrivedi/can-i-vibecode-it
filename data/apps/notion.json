@@ -1,0 +1,19 @@
+{
+  "slug": "notion",
+  "name": "Notion",
+  "domain": "notion.so",
+  "category": "Docs & Knowledge",
+  "priceMonthly": 12,
+  "verdict": "kinda",
+  "whatYouLose": [
+    "A decade of polish in collaborative editing and block transforms",
+    "The marketplace of templates, integrations, and community-made systems",
+    "Reliable offline sync and conflict resolution across every device"
+  ],
+  "priorArt": [
+    { "name": "AppFlowy", "url": "https://github.com/AppFlowy-IO/AppFlowy" },
+    { "name": "AFFiNE", "url": "https://github.com/toeverything/AFFiNE" }
+  ],
+  "prompt": "Build a private team knowledge base with pages, nested documents, slash commands, markdown shortcuts, a block editor, a left navigation tree, full-text search, tags, backlinks, favorites, and a lightweight kanban database view. Use Astro server output, SQLite, accessible server-rendered HTML, and vanilla JavaScript. Include import/export for Markdown, optimistic saves, keyboard navigation, and a clean mobile layout. Ship seed content, migrations, tests, and a README with deployment steps. Do not add accounts; protect the app with one shared admin password from an environment variable.",
+  "notes": "A focused internal wiki is very buildable. A universal workspace with real-time multiplayer and dozens of database views is not a one-prompt job."
+}

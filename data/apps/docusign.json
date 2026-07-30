@@ -1,0 +1,19 @@
+{
+  "slug": "docusign",
+  "name": "DocuSign",
+  "domain": "docusign.com",
+  "category": "Documents",
+  "priceMonthly": 25,
+  "verdict": "no",
+  "whatYouLose": [
+    "Jurisdiction-specific legal and identity assurance",
+    "Tamper-evident audit trails and mature evidence packages",
+    "Enterprise security reviews, retention controls, and integrations"
+  ],
+  "priorArt": [
+    { "name": "Documenso", "url": "https://github.com/documenso/documenso" },
+    { "name": "OpenSign", "url": "https://github.com/opensignlabs/opensign" }
+  ],
+  "prompt": "Build an internal approval-signoff tool, not a legally equivalent e-signature service. Admins upload a PDF, place typed-name, date, checkbox, and approval fields, invite known colleagues by expiring signed link, and record an append-only audit log with timestamps and document hashes. Produce a final PDF and downloadable audit JSON. Use Astro SSR, SQLite, secure tokens, rate limiting, and clear copy stating that the tool is for low-risk internal acknowledgements only. Add threat-model notes and tests.",
+  "notes": "A workflow that records acknowledgement is buildable. A legally defensible, globally compliant trust product is not a responsible one-prompt replacement."
+}

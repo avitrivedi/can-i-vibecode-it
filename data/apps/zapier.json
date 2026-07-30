@@ -1,0 +1,19 @@
+{
+  "slug": "zapier",
+  "name": "Zapier",
+  "domain": "zapier.com",
+  "category": "Automation",
+  "priceMonthly": 29,
+  "verdict": "kinda",
+  "whatYouLose": [
+    "Thousands of maintained OAuth integrations",
+    "Durable retries, replay tooling, and high-volume task history",
+    "A nontechnical visual builder with mature error handling"
+  ],
+  "priorArt": [
+    { "name": "n8n", "url": "https://github.com/n8n-io/n8n" },
+    { "name": "Activepieces", "url": "https://github.com/activepieces/activepieces" }
+  ],
+  "prompt": "Build a small webhook automation runner for a single team. Users create flows containing an incoming webhook trigger, JSON field mapping, filters, HTTP request steps, delays, and email notifications. Store encrypted secrets and flow definitions in SQLite, execute jobs from a durable queue, retry failed steps with exponential backoff, and show searchable run logs with replay. Provide signed webhook URLs, per-flow rate limits, a password-protected admin, tests for retries, and a Docker deployment guide. Use an Astro server UI and vanilla JavaScript.",
+  "notes": "Replacing three known automations is reasonable. Replacing Zapier's connector catalog and reliability contract is a software company."
+}

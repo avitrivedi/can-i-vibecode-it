@@ -1,0 +1,68 @@
+---
+import type { AppEntry } from "../lib/apps";
+import { categoryEmoji, verdictCopy } from "../lib/apps";
+import { money } from "../lib/site";
+
+interface Props {
+  apps: (AppEntry & { votes: number })[];
+}
+
+const { apps } = Astro.props;
+---
+
+<div class="death-list" data-death-list>
+  <div class="death-head" aria-hidden="true">
+    <span># / PRODUCT</span>
+    <span>CATEGORY</span>
+    <span>RENT</span>
+    <span>VERDICT</span>
+    <span>REPLACED</span>
+  </div>
+  {
+    apps.map((app, index) => (
+      <a
+        class="death-row"
+        href={`/${app.slug}`}
+        data-filter-row
+        data-name={`${app.name} ${app.domain}`.toLowerCase()}
+        data-category={app.category}
+        data-verdict={app.verdict}
+      >
+        <span class="app-cell">
+          <span class="rank">{String(index + 1).padStart(2, "0")}</span>
+          <img
+            class="app-icon"
+            src={`/favicons/${app.slug}.png`}
+            width="40"
+            height="40"
+            alt=""
+            loading={index > 5 ? "lazy" : "eager"}
+          />
+          <span>
+            <strong>{app.name}</strong>
+            <small>{app.domain}</small>
+          </span>
+        </span>
+        <span class="category-cell">
+          <i aria-hidden="true">{categoryEmoji[app.category] || "•"}</i>
+          {app.category}
+        </span>
+        <span class="price-cell">{money(app.priceMonthly)}<small>/mo</small></span>
+        <span>
+          <span class={`verdict verdict-${app.verdict}`}>
+            <i></i>{verdictCopy[app.verdict].short}
+          </span>
+        </span>
+        <span class="vote-cell">
+          <strong data-vote-display={app.slug}>{app.votes.toLocaleString()}</strong>
+          <small>builders</small>
+          <span class="row-arrow" aria-hidden="true">↗</span>
+        </span>
+      </a>
+    ))
+  }
+  <div class="list-empty" data-list-empty hidden>
+    <span>NO MATCHING PROCESS FOUND</span>
+    <small>Try a broader query or reset the category filter.</small>
+  </div>
+</div>

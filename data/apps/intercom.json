@@ -1,0 +1,19 @@
+{
+  "slug": "intercom",
+  "name": "Intercom",
+  "domain": "intercom.com",
+  "category": "Support",
+  "priceMonthly": 39,
+  "verdict": "no",
+  "whatYouLose": [
+    "Reliable real-time messaging and identity across web and mobile",
+    "Inbox routing, SLAs, bots, knowledge, campaigns, and reporting",
+    "A large integration and support operations ecosystem"
+  ],
+  "priorArt": [
+    { "name": "Chatwoot", "url": "https://github.com/chatwoot/chatwoot" },
+    { "name": "Papercups", "url": "https://github.com/papercups-io/papercups" }
+  ],
+  "prompt": "Build a lightweight support request inbox for a small product. Add an embeddable contact widget that creates a conversation, email notifications for new messages, a password-protected team inbox, assignment, status, internal notes, tags, saved replies, searchable history, and a simple help-center page. Use polling rather than promising perfect real-time chat, store data in SQLite, protect all public endpoints with rate limits and honeypots, and use Astro SSR with vanilla JavaScript. Include export, retention controls, and tests.",
+  "notes": "A contact inbox is attainable. Intercom's full real-time customer platform is far outside one prompt and carries operational risk."
+}

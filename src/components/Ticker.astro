@@ -1,0 +1,65 @@
+---
+import type { AppEntry } from "../lib/apps";
+
+interface Props {
+  apps: (AppEntry & { votes: number })[];
+  total: number;
+}
+
+const { apps, total } = Astro.props;
+const totalString = Math.round(total).toLocaleString("en-US");
+const digits = totalString.split("");
+const tape = [...apps, ...apps];
+---
+
+<section class="market-ticker" aria-label={`Collective MRR destroyed: $${total.toLocaleString()} per month`}>
+  <div class="ticker-main shell">
+    <span class="ticker-live"><i></i> LIVE TALLY</span>
+    <span class="ticker-label">COLLECTIVE MRR DESTROYED:</span>
+    <strong class="odometer" data-odometer>
+      <span class="currency">$</span>
+      {
+        digits.map((digit, index) =>
+          digit === "," ? (
+            <span class="odometer-comma">,</span>
+          ) : (
+            <span
+              class="odometer-window"
+              style={`--digit:${digit};--delay:${index * 45}ms`}
+              data-digit={digit}
+            >
+              <span class="odometer-strip" aria-hidden="true">
+                <span>0</span><span>1</span><span>2</span><span>3</span><span>4</span>
+                <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span>
+              </span>
+              <span class="sr-only">{digit}</span>
+            </span>
+          )
+        )
+      }
+      <span class="per-month">/MO</span>
+    </strong>
+  </div>
+  <div class="price-tape" aria-hidden="true">
+    <div class="price-tape-track">
+      {
+        tape.map((app) => (
+          <span>
+            <b>{app.name.toUpperCase()}</b>
+            <i class={`tape-arrow ${app.verdict}`}>▼</i>
+            ${app.priceMonthly}/MO
+            <em>× {app.votes.toLocaleString()}</em>
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  requestAnimationFrame(() => {
+    document.querySelectorAll("[data-odometer] .odometer-window").forEach((digit) => {
+      digit.classList.add("is-rolling");
+    });
+  });
+</script>

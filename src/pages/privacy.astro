@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Does Can I Vibecode It? track you?"
+  description="No third-party analytics, ad pixels, accounts, or cross-site tracking."
+  canonicalPath="/privacy"
+>
+  <section class="page-hero">
+    <div class="narrow-shell">
+      <p class="eyebrow">PRIVACY / PLAIN ENGLISH</p>
+      <h1>Does this site track you?</h1>
+      <p>No ad pixels. No cross-site profiles. No dark patterns.</p>
+    </div>
+  </section>
+  <article class="prose narrow-shell">
+    <h2>What gets stored?</h2>
+    <p>
+      If you vote, the server stores a one-way salted hash of your IP address
+      for 24-hour rate limiting. The raw address is not stored in the
+      application database. If you join the waitlist, we store the email you
+      submit and the same salted network hash for abuse prevention.
+    </p>
+    <h2>What runs in your browser?</h2>
+    <p>
+      Vanilla JavaScript powers search, filters, copy buttons, motion, and the
+      theme switch. Your chosen theme is remembered in local storage. There are
+      no third-party analytics scripts, advertising tags, or social widgets.
+    </p>
+    <h2>Can I remove my email?</h2>
+    <p>
+      Yes. Open an issue in the public repository with a safe contact method;
+      do not post the address publicly. We will verify ownership and remove it.
+    </p>
+  </article>
+</BaseLayout>

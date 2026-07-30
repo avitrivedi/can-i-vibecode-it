@@ -1,0 +1,19 @@
+{
+  "slug": "airtable",
+  "name": "Airtable",
+  "domain": "airtable.com",
+  "category": "Databases",
+  "priceMonthly": 24,
+  "verdict": "kinda",
+  "whatYouLose": [
+    "A general-purpose relational schema builder with many field types",
+    "Automations, interfaces, extensions, permissions, and sync connectors",
+    "Robust collaborative editing on large bases"
+  ],
+  "priorArt": [
+    { "name": "NocoDB", "url": "https://github.com/nocodb/nocodb" },
+    { "name": "Baserow", "url": "https://github.com/bramw/baserow" }
+  ],
+  "prompt": "Build a purpose-built content operations database. Model campaigns, assets, owners, channels, statuses, due dates, and related deliverables in SQLite. Provide spreadsheet, kanban, and calendar views; inline editing; saved filters; CSV import/export; attachments stored on disk; audit history; and a read-only share view. Make the schema explicit in code instead of building a universal database designer. Use Astro SSR, vanilla JavaScript, transactions for edits, and a password-protected admin.",
+  "notes": "The winning move is not cloning Airtable. It is coding the exact relational workflow your team actually uses."
+}

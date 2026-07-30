@@ -1,0 +1,16 @@
+/node_modules/
+/dist/
+/.astro/
+/.vinext/
+/.next/
+/.wrangler/
+/work/
+/outputs/
+.env
+.env.*
+!.env.example
+data/*.db
+data/*.db-shm
+data/*.db-wal
+npm-debug.log*
+.DS_Store

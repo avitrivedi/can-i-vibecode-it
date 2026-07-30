@@ -1,0 +1,19 @@
+{
+  "slug": "buffer",
+  "name": "Buffer",
+  "domain": "buffer.com",
+  "category": "Social",
+  "priceMonthly": 6,
+  "verdict": "yes",
+  "whatYouLose": [
+    "Maintained API integrations across changing social platforms",
+    "Cross-network analytics and team approval workflows",
+    "Compliance with every platform's publishing edge cases"
+  ],
+  "priorArt": [
+    { "name": "Postiz", "url": "https://github.com/gitroomhq/postiz-app" },
+    { "name": "Mixpost", "url": "https://github.com/inovector/mixpost" }
+  ],
+  "prompt": "Build a single-account social post queue for one supported network. Users draft posts, attach images, preview formatting, choose a publish time, and see a calendar and queue. Store drafts and job state in SQLite, encrypt the platform token, publish from a background worker, retry transient errors, and show a clear failure inbox. Include timezone-safe scheduling, a password-protected admin, first-party engagement snapshots, tests with a mocked network API, and an Astro SSR interface using vanilla JavaScript.",
+  "notes": "Yes for one or two networks you control. Reassess if your livelihood depends on every network integration always working."
+}

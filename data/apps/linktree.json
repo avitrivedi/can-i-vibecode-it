@@ -1,0 +1,19 @@
+{
+  "slug": "linktree",
+  "name": "Linktree",
+  "domain": "linktr.ee",
+  "category": "Marketing",
+  "priceMonthly": 5,
+  "verdict": "yes",
+  "whatYouLose": [
+    "A template marketplace and built-in commerce integrations",
+    "Turnkey analytics dashboards and audience retargeting tools",
+    "No-code editing for many nontechnical creators"
+  ],
+  "priorArt": [
+    { "name": "LittleLink", "url": "https://github.com/sethcottle/littlelink" },
+    { "name": "LinkStack", "url": "https://github.com/LinkStackOrg/LinkStack" }
+  ],
+  "prompt": "Build a lightning-fast personal link-in-bio page with a profile image, bio, social icons, reorderable link cards, optional featured link, scheduled visibility, and theme controls. Include a password-protected admin page, first-party click counts in SQLite, UTM preservation, accessible focus states, a 100/100 performance target, Open Graph metadata, and a one-command deployment guide. Use Astro server rendering and vanilla JavaScript only. Do not load third-party analytics or fonts at runtime.",
+  "notes": "This is a textbook yes: narrow surface area, simple data, and your custom page will usually be faster and more distinctive."
+}
