@@ -32,6 +32,11 @@ Set these environment variables:
 The deployment target must provide a persistent disk. Run `npm run build`, then
 `npm start`.
 
+The same build also emits a Sites-compatible Worker entrypoint. On Sites, the
+public pages are prerendered by Astro and votes/waitlist records use the
+platform-managed `DB` binding; the standard standalone Node runtime continues
+to use `better-sqlite3`.
+
 ## App data
 
 Add one `data/apps/{slug}.json` file with:

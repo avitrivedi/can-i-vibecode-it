@@ -2,11 +2,17 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import {
   appBySlug,
+  apps,
   relatedApps,
   verdictCopy
 } from "../lib/apps";
 import { getVoteCount } from "../lib/db";
 import { canonicalFor, money, ORG_ID, SITE_NAME } from "../lib/site";
+
+export const prerender = true;
+export function getStaticPaths() {
+  return apps.map((entry) => ({ params: { slug: entry.slug } }));
+}
 
 const slug = Astro.params.slug || "";
 const app = appBySlug.get(slug);

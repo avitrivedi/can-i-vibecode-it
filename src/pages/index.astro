@@ -6,6 +6,8 @@ import { apps, categories, categoryEmoji } from "../lib/apps";
 import { getVoteCounts } from "../lib/db";
 import { canonicalFor, ORG_ID, SITE_DESCRIPTION, SITE_NAME } from "../lib/site";
 
+export const prerender = true;
+
 const voteCounts = getVoteCounts();
 const ranked = apps
   .map((app) => ({ ...app, votes: voteCounts.get(app.slug) ?? 0 }))

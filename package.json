@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "astro dev",
     "prebuild": "node scripts/generate-assets.mjs",
-    "build": "astro build",
+    "build": "astro build && node scripts/prepare-sites-output.mjs",
     "start": "node dist/server/entry.mjs",
     "check": "astro check",
     "test": "node --test tests/site.test.mjs"

@@ -2,6 +2,8 @@ import type { APIRoute } from "astro";
 import { apps } from "../lib/apps";
 import { canonicalFor } from "../lib/site";
 
+export const prerender = true;
+
 export const GET: APIRoute = ({ url }) => {
   const paths = [
     "/",
